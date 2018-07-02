@@ -1,11 +1,11 @@
-FROM golang:1.9.2-stretch
+FROM golang:1.9.7-stretch
 ENV SCOPE_SKIP_UI_ASSETS true
 RUN apt-get update && \
-	apt-get install -y libpcap-dev python-requests time file shellcheck git gcc-arm-linux-gnueabihf curl build-essential python-pip && \
+	apt-get install -y libpcap-dev python-requests time file shellcheck git curl build-essential python-pip && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN go clean -i net && \
 	go install -tags netgo std && \
-	go install -race -tags netgo std
+	go install -tags netgo std
 RUN curl -fsSL -o shfmt https://github.com/mvdan/sh/releases/download/v1.3.0/shfmt_v1.3.0_linux_amd64 && \
     chmod +x shfmt && \
     mv shfmt /usr/bin
